@@ -1,0 +1,82 @@
+# Build-Ausgaben
+build/
+dist/
+logs/
+*.o
+*.a
+
+# Spieldaten (Bitmap-Brothers-Assets aus Upstream) -- NICHTS davon ins
+# Repository.
+#
+# ABER: die beiden Kartenlisten gehoeren hinein. Sie enthalten kein fremdes
+# Material, nur Dateinamen, und sie sind ENTSCHEIDUNGEN -- welche Karten
+# auswaehlbar sind und in welcher Reihenfolge die Kampagne laeuft, steht
+# nirgends sonst. tools/dist_bundle.sh liest beide; ohne sie laesst sich
+# gar kein Paket bauen.
+#
+# WARUM DIE REGEL SO UMSTAENDLICH AUSSIEHT: Ein blosses "data/" plus
+# "!data/game/map_list.txt" funktioniert NICHT. Git steigt in ein
+# ausgeschlossenes Verzeichnis gar nicht erst hinab, eine Ausnahme fuer
+# eine Datei darin kann also nie greifen. Die frueheren Fassungen haben
+# das behauptet und lagen falsch -- die Datei war nur deshalb versioniert,
+# weil sie einmal mit "git add -f" hineingezwungen wurde. Beim Aufbau
+# eines frischen Zweiges fiel sie prompt heraus.
+#
+# Richtig ist, Ebene fuer Ebene wieder aufzumachen.
+data/*
+!data/game/
+data/game/*
+!data/game/map_list.txt
+!data/game/story_list.txt
+
+# FS-UAE UND DIE OERTLICHE TESTUMGEBUNG gehoeren NICHT ins Repository.
+#
+# Die Profile tragen fest verdrahtete Pfade EINER Maschine (Kickstart-ROM,
+# Festplattenabbild), und die Skripte daneben steuern genau diese
+# Umgebung. Fuer niemanden sonst sind sie brauchbar, und veroeffentlicht
+# geben sie den Aufbau eines fremden Rechners preis.
+#
+# Die Dateien bleiben auf der Platte liegen -- nur Git sieht sie nicht
+# mehr.
+emu/
+tools/run.sh
+tools/prepare_emu.sh
+tools/dist_amiga.sh
+tools/dist_lha.sh
+tools/analyze_serial.py
+
+# DAS PACKEN DES AUSLIEFERUNGSARCHIVS gehoert ebenfalls nicht hierher.
+# Das Repository enthaelt den QUELLTEXT; wie daraus ein Archiv wird, ist
+# Sache dessen, der es baut. Die Skripte und die Paketvorlage bleiben
+# oertlich.
+tools/dist_bundle.sh
+tools/check_install.py
+tools/make_icon.py
+dist-vorlage/*
+!dist-vorlage/README.txt
+
+# Projektlokale Python-Umgebung (amitools)
+tools/.venv/
+__pycache__/
+tools/cd/amiga/tables.c
+
+# Streudateien von Analyse-Agenten (Messprotokolle, Sonden)
+.sz_*
+
+# Der Launcher-Logiktest schreibt seine Einstellungsdatei ins aktuelle
+# Verzeichnis. Ueber 'make launchtest' landet sie in build/, bei einem
+# Aufruf von Hand aber hier -- und versioniert gehoert sie nirgends hin.
+ZodLaunch.cfg
+
+# ZIELPFADE MIT "PROGDIR:" -- entstehen, wenn ein Lauf auf dem Host den
+# Amiga-Pfad woertlich nimmt. Genau so sind die zehn Musikstuecke der CD
+# einmal in die Versionierung geraten: die Regel /music/ darunter war
+# richtig gemeint, traf aber "PROGDIR:music/" nicht.
+PROGDIR:*
+
+# Musik und Instrumentenbank gehoeren NICHT ins Repository.
+# Die Stuecke stammen von der CD der Bitmap Brothers, die Bank ist fremdes
+# Material mit offener Herkunftsfrage.
+# music/ ist das Arbeitsverzeichnis fuer die Laeufe auf der V1200.
+/music/
+/MIDI_Instruments*

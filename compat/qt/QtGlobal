@@ -1,0 +1,18 @@
+/* Qt-Ersatz: Die Engine nutzt aus Qt nur Plattform- und Export-Makros.
+ * Statische Einzel-Binary -> Export/Import leer. Unter AmigaOS ist weder
+ * Q_OS_WIN noch Q_OS_UNIX gesetzt. */
+#ifndef ZOD_COMPAT_QTGLOBAL
+#define ZOD_COMPAT_QTGLOBAL
+
+#if defined(_WIN32)
+#  define Q_OS_WIN
+#elif defined(__unix__) || defined(__APPLE__) || defined(__amigaos__)
+/* AmigaOS nutzt denselben Zweig: die BSD-Includes der Engine werden von den
+ * Ersatz-Headern in port/amiga/include bedient (spaeter bsdsocket.library). */
+#  define Q_OS_UNIX
+#endif
+
+#define Q_DECL_EXPORT
+#define Q_DECL_IMPORT
+
+#endif
