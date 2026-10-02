@@ -1,0 +1,7 @@
+0
+../Data/Campaing/Z_original/p02_bb_orig01.map
+../Data/Campaing/Z_original/p02_bb_orig02.map
+../Data/Campaing/Z_original/p02_bb_orig03.map
+../Data/Campaing/Z_original/p02_bb_orig04.map
+../Data/Campaing/Z_original/p02_bb_orig05.map
+../Data/Campaing/Z_original/p02_bb_orig06.map

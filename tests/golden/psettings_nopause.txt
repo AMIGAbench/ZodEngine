@@ -1,0 +1,7 @@
+# Server-Einstellungen (ZPSettings, Aufruf mit -e) fuer automatische Laeufe:
+# Karte startet ungepaust, Bots spielen sofort, keine Datenbank/Anmeldung.
+use_database=0
+use_mysql=0
+require_login=0
+start_map_paused=0
+bots_start_ignored=0
